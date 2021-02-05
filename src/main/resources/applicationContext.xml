@@ -3,81 +3,80 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<context:component-scan base-package="jisoo.spring.web"></context:component-scan>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<context:property-placeholder location="classpath:config/database.properties" />
 	
-<!-- 	
-	<bean id="before" class="jisoo.spring.web.common.BeforeAdvice"></bean>
-	<bean id="afterReturning" class="jisoo.spring.web.common.AfterReturningAdvice"></bean>
-	<bean id="log" class="jisoo.spring.web.common.Log4jAdvice"/>
-	<bean id="afterThrowing" class="jisoo.spring.web.common.AfterThrowingAdvice"/>
-	<bean id="around" class="jisoo.spring.web.common.AroundAdvice"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+
+
+	<!-- 스프링 JDBC 설정 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	
+	
+	<!-- 트랜잭션 설정 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/> 	<!-- 읽기전용으로 트랜잭션관리 대상 제외 -->
+			<tx:method name="*"/>						<!-- 나머지 모든 메서드는 트랜잭션 관리 대상 포함 -->
+		</tx:attributes>
+	</tx:advice>
+	
 	<aop:config>
-		<aop:pointcut expression="execution(* jisoo.spring.web..*Impl.*(..))" id="allPointcut"/>
-		<aop:pointcut expression="execution(* jisoo.spring.web..*Impl.get*(..))" id="getPointcut"/>
-		<aop:aspect ref="afterReturning">
-			<aop:after-returning method="afterLog" pointcut-ref="getPointcut" returning="returnObj"/>
-		</aop:aspect>
+		<aop:pointcut expression="execution(* jisoo.spring.web..*(..))" id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/> 
+		<!-- ㄴ 트랜잭션은 aspect 대신 advisor 사용 필수 -->
 	</aop:config>
-
-
-	<bean id="myLifeBean" class="jisoo.spring.lifecycle.MyLifeBeanImpl" init-method="init">
-		<property name="greeting"><value>Hello, </value></property>
-	</bean>
 	
-	<bean class="jisoo.spring.lifecycle.CustomBeanPostProccessor"/>
+	<!-- <bean id="before" class="jisoo.spring.web.common.BeforeAdvice"></bean> 
+		<bean id="afterReturning" class="jisoo.spring.web.common.AfterReturningAdvice"></bean> 
+		<bean id="log" class="jisoo.spring.web.common.Log4jAdvice"/> <bean id="afterThrowing" 
+		class="jisoo.spring.web.common.AfterThrowingAdvice"/> <bean id="around" class="jisoo.spring.web.common.AroundAdvice"/> 
+		<aop:config> <aop:pointcut expression="execution(* jisoo.spring.web..*Impl.*(..))" 
+		id="allPointcut"/> <aop:pointcut expression="execution(* jisoo.spring.web..*Impl.get*(..))" 
+		id="getPointcut"/> <aop:aspect ref="afterReturning"> <aop:after-returning 
+		method="afterLog" pointcut-ref="getPointcut" returning="returnObj"/> </aop:aspect> 
+		</aop:config> <bean id="myLifeBean" class="jisoo.spring.lifecycle.MyLifeBeanImpl" 
+		init-method="init"> <property name="greeting"><value>Hello, </value></property> 
+		</bean> <bean class="jisoo.spring.lifecycle.CustomBeanPostProccessor"/> <context:component-scan 
+		base-package="jisoo.spring.polymorphism"/> <bean id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/> 
+		<bean id="tv" class="jisoo.spring.polymorphism.SamsungTV" p:speaker-ref="sony" 
+		p:price="20000">-->
+		
+	<!--   의존성 주입의 방법으로는 총 5가지가 있다. 그중 가장 보편적인 방법은 1,2 
+		방법 1. (method, property) setter injection 
+		<property name="speaker" ref="apple"/> 
+		<property name="price" value="100000"/> -->
 
-	<context:component-scan base-package="jisoo.spring.polymorphism"/>
-	
-	<bean id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/>
-	
+	<!-- 2. constructor injection <constructor-arg ref="apple"></constructor-arg> 
+		<constructor-arg value="10000000"></constructor-arg> -->
 
-	<bean id="tv" class="jisoo.spring.polymorphism.SamsungTV"
-	 p:speaker-ref="sony" p:price="20000">
-	 
-	 	
-	 	의존성 주입의 방법으로는 총 5가지가 있다. 그중 가장 보편적인 방법은 1,2
-	 	방법 1. (method, property) setter injection 
-	 	
-	 	<property name="speaker" ref="apple"/>
-	 	<property name="price" value="100000"/>
-	 	-->
-	 	
-	 	
-	 	<!-- 
-	 	2. constructor injection
-	 	
-	 	<constructor-arg ref="apple"></constructor-arg>
-	 	<constructor-arg value="10000000"></constructor-arg>
-	 	 -->
-	 	 
-	 	 <!-- 
-	 	 3. xml Namespaces 이용하기 
-	 	 => p: , c: 태그 사용
-	 	 -->
-	 	 
-	 	 <!-- 
-	 	 4. lookup method injection - 어쩌다 한 번 씀
-	 	 5. 임의의 빈 객체 전달
-	 
-	 </bean>
-	 <bean id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/>
-	 <bean id="apple" class="jisoo.spring.polymorphism.AppleSpeaker"/>
- 
+	<!-- 3. xml Namespaces 이용하기 => p: , c: 태그 사용 -->
 
-	<bean id="collectionBean" class="jisoo.spring.collection.CollectionBean">
-		<property name="addressList">
-			<set value-type="java.lang.String">
-				<value>서울시 종로구 묘동</value>
-				<value>서울시 동대문구 장안동</value>
-				<value>서울시 종로구 울랄라</value>
-				<value>서울시 종로구 울랄라</value>
-			</set>
-		</property>
-	</bean>
--->	
+	<!-- 4. lookup method injection - 어쩌다 한 번 씀 5. 임의의 빈 객체 전달 </bean> <bean 
+		id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/> <bean id="apple" 
+		class="jisoo.spring.polymorphism.AppleSpeaker"/> <bean id="collectionBean" 
+		class="jisoo.spring.collection.CollectionBean"> <property name="addressList"> 
+		<set value-type="java.lang.String"> <value>서울시 종로구 묘동</value> <value>서울시 
+		동대문구 장안동</value> <value>서울시 종로구 울랄라</value> <value>서울시 종로구 울랄라</value> </set> 
+		</property> </bean> -->
 </beans>
