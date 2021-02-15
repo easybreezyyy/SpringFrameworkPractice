@@ -14,7 +14,7 @@
 	<a href="logout.do">Log Out</a>
 	<hr>
 	<form action="updateBoard.do" method="post">
-	<input name="seq" type="hidden" value="${board.seq }" />
+	<input name="seq" type="hidden" value="${board.seq}" />
 		<table border="1">
 			<tr>
 				<td>제목</td>
@@ -43,7 +43,7 @@
 	</form>
 	<hr>
 	<a href="insertBoard.jsp">글등록</a>&nbsp;&nbsp;&nbsp;
-	<a href="deleteBoard.do?seq=${board.seq }" >글삭제</a>&nbsp;&nbsp;&nbsp;
+	<a href="deleteBoard.do?seq=${board.seq}" >글삭제</a>&nbsp;&nbsp;&nbsp;
 	<a href="getBoardList.do">글목록</a>
 </body>
 </html>

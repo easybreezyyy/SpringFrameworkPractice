@@ -3,16 +3,17 @@ package jisoo.spring.web.board;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+
 import jisoo.spring.web.board.impl.BoardDAO;
-import jisoo.spring.web.controller.Controller;
 
 public class InsertBoardController implements Controller {
 
 	@Override
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("글 등록");
 		// 1. 사용자 입력 정보 추출
-		//request.setCharacterEncoding("utf-8");
 		String title = request.getParameter("title");
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
@@ -27,7 +28,9 @@ public class InsertBoardController implements Controller {
 		boardDAO.insertBoard(vo);
 
 		// 3. 화면 네비게이션
-		return "getBoardList.do";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:getBoardList.do");
+		return mav;
 	}
 
 }
