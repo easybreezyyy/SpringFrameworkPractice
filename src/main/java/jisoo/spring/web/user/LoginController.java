@@ -1,9 +1,9 @@
-package jisoo.spring.web.controller;
+package jisoo.spring.web.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jisoo.spring.web.user.UserVO;
+import jisoo.spring.web.controller.Controller;
 import jisoo.spring.web.user.impl.UserDAO;
 
 public class LoginController implements Controller {

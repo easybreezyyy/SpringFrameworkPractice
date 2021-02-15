@@ -21,29 +21,29 @@ public class BoardDAOSpring {
 	private final String BOARD_LIST = "select * from myboard order by seq desc";
 
 	public void insertBoard(BoardVO vo) {
-		System.out.println("BoardDAOSpring - insertBoard() 扁瓷 贸府");
+		System.out.println("BoardDAOSpring - insertBoard() 鞁ろ枆");
 		jdbcTemplate.update(BOARD_INSERT, vo.getTitle(), vo.getWriter(), vo.getContent());
 	}
 
 	public void updateBoard(BoardVO vo) {
-		System.out.println("Spring JDBC肺 updateBoard() 扁瓷 贸府");
+		System.out.println("Spring JDBC updateBoard() 鞁ろ枆");
 		jdbcTemplate.update(BOARD_UPDATE, vo.getTitle(), vo.getContent(), vo.getSeq());
 	}
 
 	public void deleteBoard(BoardVO vo) {
-		System.out.println("Spring JDBC肺 deleteBoard() 扁瓷 贸府");
+		System.out.println("Spring JDBC deleteBoard() 鞁ろ枆");
 		jdbcTemplate.update(BOARD_DELETE, vo.getSeq());
 	}
 
 	@SuppressWarnings("deprecation")
 	public BoardVO getBoard(BoardVO vo) {
-		System.out.println("Spring JDBC肺 getBoard() 扁瓷 贸府");
+		System.out.println("Spring JDBC getBoard() 鞁ろ枆");
 		Object[] args = { vo.getSeq() };
 		return jdbcTemplate.queryForObject(BOARD_GET, args, new BoardRowMapper());
 	}
 	
 	public List<BoardVO> getBoardList(BoardVO vo){
-		System.out.println("Spring JDBC肺 getBoardList() 扁瓷 贸府");
+		System.out.println("Spring JDBC getBoardList() 鞁ろ枆");
 		return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
 	}
 }

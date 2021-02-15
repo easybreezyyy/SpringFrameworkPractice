@@ -19,7 +19,7 @@ public class UserDAO {
 	public UserVO getUser(UserVO vo) {
 		UserVO user = null;
 		try {
-			System.out.println("JDBC·Î getUser() ±â´É Ã³¸®");
+			System.out.println("JDBC getUser() ì‹¤í–‰");
 			conn = JDBCUtil.getConnection();
 			pstmt = conn.prepareStatement(USER_GET);
 			pstmt.setString(1, vo.getId());
