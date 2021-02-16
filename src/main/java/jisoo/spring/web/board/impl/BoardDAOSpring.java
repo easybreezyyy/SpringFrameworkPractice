@@ -1,5 +1,5 @@
 package jisoo.spring.web.board.impl;
-
+/*
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import jisoo.spring.web.board.BoardVO;
+
 
 @Repository
 public class BoardDAOSpring {
@@ -47,3 +48,4 @@ public class BoardDAOSpring {
 		return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
 	}
 }
+*/

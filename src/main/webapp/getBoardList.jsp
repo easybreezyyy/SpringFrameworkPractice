@@ -13,18 +13,19 @@
 <body>
 	<h1>글 목록</h1>
 	<h3>
-		테스트 회원님 환영합니다.<a href="logout.do">Log-Out</a>
+		${userName } 회원님 환영합니다.<a href="logout.do">Log-Out</a>
 	</h3>
 
 	<!-- 검색 시작 -->
-	<form action="getBoardList.jsp" method="post">
+	<form action="getBoardList.do" method="post">
 		<table border="1">
 			<tr>
 				<td><select name="searchCondition">
 						<option value="TITLE">제목</option>
 						<option value="CONTENT">내용</option>
-				</select> <input type="text" name="searchKeyword" /> <input type="submit"
-					value="검색" /></td>
+				</select> 
+				<input type="text" name="searchKeyword" /> 
+				<input type="submit" value="검색" /></td>
 			</tr>
 		</table>
 	</form>

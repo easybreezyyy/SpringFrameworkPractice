@@ -1,5 +1,5 @@
 package jisoo.spring.web.board.impl;
-
+/*
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import jisoo.spring.web.board.BoardService;
 import jisoo.spring.web.board.BoardVO;
+
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -42,3 +43,4 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 }
+*/
