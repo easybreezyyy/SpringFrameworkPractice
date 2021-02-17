@@ -1,5 +1,5 @@
 package jisoo.spring.web.board.impl;
-/*
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,11 @@ import jisoo.spring.web.board.BoardVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
-//	@Autowired
-//	private BoardDAO boardDAO;
-	
 	@Autowired
-	private BoardDAOSpring boardDAO;
+	private BoardDAO boardDAO;
+	
+//	@Autowired
+//	private BoardDAOSpring boardDAO;
 
 	@Override
 	public void insertBoard(BoardVO vo) {
@@ -43,4 +43,3 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 }
-*/

@@ -19,7 +19,9 @@ public class BoardDAOSpring {
 	private final String BOARD_UPDATE = "update myboard set title=?, " + "content=? where seq=?";
 	private final String BOARD_DELETE = "delete myboard where seq=?";
 	private final String BOARD_GET = "select * from myboard where seq=?";
-	private final String BOARD_LIST = "select * from myboard order by seq desc";
+	//private final String BOARD_LIST = "select * from myboard order by seq desc";
+	private final String BOARD_LIST_T = "select * from myboard where title like '%'||?||'%' order by seq desc";
+	private final String BOARD_LIST_C = "select * from myboard where content like '%'||?||'%' order by seq desc";
 
 	public void insertBoard(BoardVO vo) {
 		System.out.println("BoardDAOSpring - insertBoard() 실행");
@@ -36,16 +38,20 @@ public class BoardDAOSpring {
 		jdbcTemplate.update(BOARD_DELETE, vo.getSeq());
 	}
 
-	@SuppressWarnings("deprecation")
 	public BoardVO getBoard(BoardVO vo) {
 		System.out.println("Spring JDBC getBoard() 실행");
-		Object[] args = { vo.getSeq() };
-		return jdbcTemplate.queryForObject(BOARD_GET, args, new BoardRowMapper());
+		return jdbcTemplate.queryForObject(BOARD_GET, new BoardRowMapper(), vo.getSeq());
 	}
 	
 	public List<BoardVO> getBoardList(BoardVO vo){
 		System.out.println("Spring JDBC getBoardList() 실행");
-		return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
+		//return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
+		if(vo.getSearchCondition().equals("TITLE")) {
+			return jdbcTemplate.query(BOARD_LIST_T, new BoardRowMapper(), vo.getSearchKeyword());
+		}else if(vo.getSearchCondition().equals("CONTENT")) {
+			return jdbcTemplate.query(BOARD_LIST_C, new BoardRowMapper(), vo.getSearchKeyword());			
+		}
+		return null;
 	}
 }
 */

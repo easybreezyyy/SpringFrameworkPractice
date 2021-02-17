@@ -1,26 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>LOGIN</title>
+<title><spring:message code="message.user.login.title" /></title>
 </head>
 <body>
-	<h1>로그인</h1>
+	<h1>
+		<spring:message code="message.user.login.title" />
+	</h1>
+	<a href="login.do?lang=en">ENG</a>&nbsp;&nbsp;
+	<a href="login.do?lang=ko">KOR</a>
 	<hr>
 	<form action="login.do" method="post">
 		<table border="1">
 			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="id" value="${user.id }"/></td>
+				<td><spring:message code="message.user.login.id" /></td>
+				<td><input type="text" name="id" value="${user.id }" /></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="password" value="${user.password }"/></td>
+				<td><spring:message code="message.user.login.password" /></td>
+				<td><input type="password" name="password"
+					value="${user.password }" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="로그인" /></td>
+				<td colspan="2"><input type="submit" value="<spring:message code="message.user.login.loginBtn"/>" /></td>
 			</tr>
 		</table>
 	</form>

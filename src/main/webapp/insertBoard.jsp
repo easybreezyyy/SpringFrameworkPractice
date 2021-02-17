@@ -26,6 +26,10 @@
 				<td><textarea name="content"></textarea></td>
 			</tr>
 			<tr>
+				<td>업로드</td>
+				<td><input type="file" name="uploadFile"/></td>
+			</tr>
+			<tr>
 				<td colspan="2"><input type="submit" value="새글 등록" /></td>
 			</tr>
 		</table>
