@@ -12,7 +12,7 @@ import jisoo.spring.web.board.BoardVO;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDAOMybatis boardDAO;
 	
 //	@Autowired
 //	private BoardDAOSpring boardDAO;

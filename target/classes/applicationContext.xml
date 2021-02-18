@@ -26,7 +26,15 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-
+	<!-- 스프링과 MyBatis 연동 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"/>
+	</bean>
+	
 	<!-- 트랜잭션 설정 -->
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
@@ -44,20 +52,6 @@
 		<!-- ㄴ 트랜잭션은 aspect 대신 advisor 사용 필수 -->
 	</aop:config>
 	
-	<!-- <bean id="before" class="jisoo.spring.web.common.BeforeAdvice"></bean> 
-		<bean id="afterReturning" class="jisoo.spring.web.common.AfterReturningAdvice"></bean> 
-		<bean id="log" class="jisoo.spring.web.common.Log4jAdvice"/> <bean id="afterThrowing" 
-		class="jisoo.spring.web.common.AfterThrowingAdvice"/> <bean id="around" class="jisoo.spring.web.common.AroundAdvice"/> 
-		<aop:config> <aop:pointcut expression="execution(* jisoo.spring.web..*Impl.*(..))" 
-		id="allPointcut"/> <aop:pointcut expression="execution(* jisoo.spring.web..*Impl.get*(..))" 
-		id="getPointcut"/> <aop:aspect ref="afterReturning"> <aop:after-returning 
-		method="afterLog" pointcut-ref="getPointcut" returning="returnObj"/> </aop:aspect> 
-		</aop:config> <bean id="myLifeBean" class="jisoo.spring.lifecycle.MyLifeBeanImpl" 
-		init-method="init"> <property name="greeting"><value>Hello, </value></property> 
-		</bean> <bean class="jisoo.spring.lifecycle.CustomBeanPostProccessor"/> <context:component-scan 
-		base-package="jisoo.spring.polymorphism"/> <bean id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/> 
-		<bean id="tv" class="jisoo.spring.polymorphism.SamsungTV" p:speaker-ref="sony" 
-		p:price="20000">-->
 		
 	<!--   의존성 주입의 방법으로는 총 5가지가 있다. 그중 가장 보편적인 방법은 1,2 
 		방법 1. (method, property) setter injection 
@@ -69,8 +63,9 @@
 
 	<!-- 3. xml Namespaces 이용하기 => p: , c: 태그 사용 -->
 
-	<!-- 4. lookup method injection - 어쩌다 한 번 씀 5. 임의의 빈 객체 전달 </bean> <bean 
-		id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/> <bean id="apple" 
+	<!-- 4. lookup method injection - 어쩌다 한 번 씀 
+		5. 임의의 빈 객체 전달 
+		</bean> <bean id="sony" class="jisoo.spring.polymorphism.SonySpeaker"/> <bean id="apple" 
 		class="jisoo.spring.polymorphism.AppleSpeaker"/> <bean id="collectionBean" 
 		class="jisoo.spring.collection.CollectionBean"> <property name="addressList"> 
 		<set value-type="java.lang.String"> <value>서울시 종로구 묘동</value> <value>서울시 
