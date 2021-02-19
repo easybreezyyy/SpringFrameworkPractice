@@ -11,7 +11,7 @@
 	<a href="logout.do">Log Out</a>
 	<hr>
 	
-	<form action="insertBoard.do" method="post">
+	<form action="insertBoard.do" method="post" enctype="multipart/form-data">
 		<table border="1">
 			<tr>
 				<td>제목</td>
